@@ -1,0 +1,39 @@
+en:
+#este codigo es la traduccion en ingles
+#  activerecord:
+#      models:
+#        product: Product
+#      attributes:
+#        product:
+#          title: "Title"
+#          description: "Description"
+#          price: "Price"
+#          photo: "Photo"
+#      errors:
+#        models:
+#          product:
+#            attributes:
+#              title:
+#                blank: "can't be blank"
+#              description:
+#                blank: "can't be blank"
+#              price:
+#                blank: "can't be blank"
+#    common:
+#      confirm: "Are you sure?"
+#    products:
+#      edit:
+#        title: "Edit product"
+#      new:
+#        title: "Add product"
+#      index:
+#        title: "Products:"
+#      create:
+#        created: "Your product has been successfully created"
+#      update:
+#        updated: "Your product has been successfully updated"
+#      destroy:
+#        destroyed: "Your product has been successfully destroyed"
+
+
+

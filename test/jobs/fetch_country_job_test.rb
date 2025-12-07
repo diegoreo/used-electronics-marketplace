@@ -1,0 +1,13 @@
+require "test_helper"
+
+class FetchCountryJobTest < ActiveJob::TestCase
+  setup do
+    ActiveJob::Base.queue_adapter = :test
+  end
+
+   test "enqueue correctly " do
+     assert_enqueued_jobs 0 
+     FetchCountryJob.perform_later("1", "0.0.0.0")
+     assert_enqueued_jobs 1
+   end
+end
