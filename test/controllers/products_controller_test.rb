@@ -171,4 +171,10 @@ test "does not allow a non-admin to delete a product" do
   assert_redirected_to products_path
 end
 
+test "does not show the favorite heart to a guest" do
+  delete session_path(users(:paco).id)
+  get product_path(products(:ps2))
+  assert_select "#favorite", count: 0
+end
+
 end

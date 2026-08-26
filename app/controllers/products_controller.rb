@@ -4,27 +4,7 @@ class ProductsController < ApplicationController
 
   def index
     @categories = Category.order(name: :asc).load_async
-    # todo este codigo fue remplazado por el doc queries>find_products.rb aqui se encuentran todos los filtros
-    #@products = Product.with_attached_photo
-    #if params[:category_id]
-    #  @products = @products.where(category_id: params[:category_id])
-    #end
-    #if params[:min_price].present?
-    #  @products = @products.where("price >= ?", params[:min_price])
-    #end
-    #if params[:max_price].present?
-    #  @products = @products.where("price <= ?", params[:max_price])
-    #end
-    #if params[:query_text].present?
-    #  @products = @products.search_full_text(params[:query_text])
-    #end
-    #order_by = Product::ORDER_BY.fetch(params[:order_by]&.to_sym, Product::ORDER_BY[:newest])
-    #@products = @products.order(order_by).load_async
-
-    @pagy, @products = pagy_countless(FindProducts.new.call(product_params_index).load_async, limit: 12)  #se remplazo @products por FindProducts.new.call(params).load_async  el codigo nuevo que esta en find_products.rb
-   
-
-    
+    @pagy, @products = pagy_countless(FindProducts.new.call(product_params_index).load_async, limit: 12)
   end
 
   def show
@@ -83,14 +63,4 @@ class ProductsController < ApplicationController
   def product
     @product ||= Product.find(params[:id])
   end
-
-# se elimino este metodo por product.broadcast
- # def notify_all_users
- #   ActionCable.server.broadcast(
- #     "product_#{product.id}",
- #     {
- #       action: "updated"
- #     }
- #   )
- # end
 end

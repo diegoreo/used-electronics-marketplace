@@ -16,5 +16,6 @@ class Authentication::UsersControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_redirected_to products_url
+    assert_equal 1, ActionMailer::Base.deliveries.size
   end
 end

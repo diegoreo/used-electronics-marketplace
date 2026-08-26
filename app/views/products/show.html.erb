@@ -8,8 +8,5 @@
 <%= link_to t(".view_more_products", username: @product.user.username), 
   user_path(@product.user.username) %>
 
-<%= render partial: "favorite", locals: { product: @product } %> 
+<%= render partial: "favorite", locals: { product: @product } %>
 <%= turbo_stream_from @product %>
-
-<!-- este action cable se sustituyo por turbo que esta en el partial 
-<div data-controller="websocket-product" data-productid="<%= @product.id %>" ></div>

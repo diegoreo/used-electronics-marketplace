@@ -35,3 +35,6 @@
 
 /app/assets/builds/*
 !/app/assets/builds/.keep
+
+# Dump de Redis (Sidekiq corre en local para FetchCountryJob/WelcomeEmailJob)
+*.rdb

@@ -30,7 +30,10 @@ module Vendelo
 
     #allow multiquery
     config.active_record.async_query_executor = :global_thread_pool
-    #Background job
-    config.active_job.queue_adapter = :sidekiq
+
+    # Adaptador de Active Job por defecto para toda la app (dev y prod).
+    # Excepción intencional: FetchCountryJob y WelcomeEmailJob fijan su propio
+    # queue_adapter = :sidekiq — ver esos archivos para el porqué.
+    config.active_job.queue_adapter = :solid_queue
   end
 end

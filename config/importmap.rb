@@ -1,7 +1,4 @@
 # Pin npm packages by running ./bin/importmap
-# pin "@rails/actioncable", to: "@rails--actioncable.js" # @8.0.200 lo quitamos porque usamos turbostream
-
-
 pin "application"
 pin "@hotwired/turbo-rails", to: "turbo.min.js"
 pin "@hotwired/stimulus-loading", to: "stimulus-loading.js"

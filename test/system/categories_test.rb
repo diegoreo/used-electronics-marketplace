@@ -2,40 +2,55 @@ require "application_system_test_case"
 
 class CategoriesTest < ApplicationSystemTestCase
   setup do
-    @category = categories(:one)
+    @category = categories(:clothes)
+    login_as users(:paco)
   end
 
   test "visiting the index" do
     visit categories_url
-    assert_selector "h1", text: "Categories"
+    assert_selector "h1", text: "Categorias"
   end
 
   test "should create category" do
-    visit categories_url
-    click_on "New category"
+    visit new_category_url
+    fill_in "Nombre", with: "Jardín"
+    find("input[type=submit]").click
 
-    fill_in "Name", with: @category.name
-    click_on "Create Category"
-
-    assert_text "Category was successfully created"
-    click_on "Back"
+    assert_text "Tu categoria se ha creado correctamente"
   end
 
   test "should update Category" do
-    visit category_url(@category)
-    click_on "Edit this category", match: :first
+    visit edit_category_url(@category)
+    fill_in "Nombre", with: "Ropa y calzado"
+    find("input[type=submit]").click
 
-    fill_in "Name", with: @category.name
-    click_on "Update Category"
-
-    assert_text "Category was successfully updated"
-    click_on "Back"
+    assert_text "Tu categoria se ha actualizado correctamente"
   end
 
   test "should destroy Category" do
-    visit category_url(@category)
-    click_on "Destroy this category", match: :first
+    visit categories_url
+    within "#category_#{@category.id}" do
+      accept_confirm { click_on "Borrar" }
+    end
 
-    assert_text "Category was successfully destroyed"
+    assert_text "Tu categoria se ha eliminado correctamente"
+  end
+
+  test "a non-admin cannot manage categories" do
+    login_as users(:maria)
+    visit categories_url
+
+    assert_current_path products_path
+    assert_text "No tienes permisos para esta accion"
+  end
+
+  private
+
+  def login_as(user)
+    visit new_session_path
+    fill_in "login", with: user.email
+    fill_in "password", with: "testme"
+    find("input[type=submit]").click
+    assert_text "Bienvenido!"
   end
 end
