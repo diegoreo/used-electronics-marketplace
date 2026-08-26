@@ -129,4 +129,46 @@ test "can delete product" do
   assert_equal flash[:notice], "Tu producto se ha eliminado correctamente"
 end
 
+test "does not allow a non-admin to view the new product form" do
+  login(users(:maria))
+  get new_product_path
+  assert_redirected_to products_path
+end
+
+test "does not allow a non-admin to create a product" do
+  login(users(:maria))
+  assert_no_difference("Product.count") do
+    post products_path, params: {
+      product: {
+        title: "Producto no autorizado",
+        description: "no deberia crearse",
+        price: 100,
+        category_id: categories(:videogames).id
+      }
+    }
+  end
+  assert_redirected_to products_path
+end
+
+test "does not allow a non-admin to view the edit product form" do
+  login(users(:maria))
+  get edit_product_path(products(:ps2))
+  assert_redirected_to products_path
+end
+
+test "does not allow a non-admin to update a product" do
+  login(users(:maria))
+  patch product_path(products(:ps2)), params: { product: { price: 1 } }
+  assert_redirected_to products_path
+  assert_not_equal 1, products(:ps2).reload.price
+end
+
+test "does not allow a non-admin to delete a product" do
+  login(users(:maria))
+  assert_no_difference("Product.count") do
+    delete product_path(products(:ps2))
+  end
+  assert_redirected_to products_path
+end
+
 end

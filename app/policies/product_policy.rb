@@ -1,13 +1,5 @@
 class ProductPolicy < BasePolicy
-  def edit
-    record.owner?
-
-  end
-  def update
-    record.owner?
-
-  end
-  def destroy
-    record.owner?
+  def method_missing(m, *args, &block)
+    Current.user.admin?
   end
 end

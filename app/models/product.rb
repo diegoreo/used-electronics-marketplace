@@ -21,10 +21,6 @@ class Product < ApplicationRecord
   belongs_to :category 
   belongs_to :user, default: -> { Current.user }
 
-  def owner?
-    user_id == Current.user&.id
-  end
-
   def broadcast
     broadcast_replace_to self, partial: "products/product_details", locals: { product: self}
   end
