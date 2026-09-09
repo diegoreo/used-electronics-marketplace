@@ -18,8 +18,10 @@ class Product < ApplicationRecord
   validates :price, presence: true
   
 
-  belongs_to :category 
+  belongs_to :category
   belongs_to :user, default: -> { Current.user }
+
+  has_many :product_requests, dependent: :destroy
 
   def broadcast
     broadcast_replace_to self, partial: "products/product_details", locals: { product: self}

@@ -9,4 +9,5 @@
   user_path(@product.user.username) %>
 
 <%= render partial: "favorite", locals: { product: @product } %>
+<%= link_to t(".request_product"), product_requests_path(product_id: @product.id), data: { turbo_method: :post } if Current.user %>
 <%= turbo_stream_from @product %>

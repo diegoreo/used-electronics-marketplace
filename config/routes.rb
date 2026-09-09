@@ -5,6 +5,12 @@ Rails.application.routes.draw do
   end
 
   resources :favorites, only: [:index, :create, :destroy], param: :product_id
+  resources :product_requests, only: [:index, :create] do
+    member do
+      patch :attend
+      patch :unattend
+    end
+  end
   resources :users, only: :show, path: "/user", param: :username
   resources :categories, except: :show
   resources :products, path: "/"

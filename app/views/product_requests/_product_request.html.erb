@@ -1,0 +1,19 @@
+<div id="<%= dom_id product_request %>">
+    <%= link_to product_request.product.title, product_path(product_request.product) %>
+    —
+    <%= product_request.user.username %>
+    —
+    <%= product_request.user.email %>
+    —
+    <%= product_request.user.phone %>
+    —
+    <%= l(product_request.created_at) %>
+    —
+    <% if product_request.attended? %>
+      <%= t(".attended") %>
+      <%= link_to t(".mark_unattended"), unattend_product_request_path(product_request), data: { turbo_method: :patch } %>
+    <% else %>
+      <%= t(".not_attended") %>
+      <%= link_to t(".mark_attended"), attend_product_request_path(product_request), data: { turbo_method: :patch } %>
+    <% end %>
+</div>

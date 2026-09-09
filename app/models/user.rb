@@ -15,9 +15,15 @@ class User < ApplicationRecord
       message: :invalid
    }
   validates :password, length: { minimum: 6 }, if: :password_digest_changed?
+  validates :phone, presence: true,
+   format: {
+      with: /\A[\d\s\+\-\(\)]{7,20}\z/,
+      message: :invalid
+   }
 
   has_many :products, dependent: :destroy
   has_many :favorites, dependent: :destroy
+  has_many :product_requests, dependent: :destroy
 
 
   before_save :downcase_attributes

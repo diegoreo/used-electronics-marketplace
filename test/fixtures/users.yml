@@ -5,13 +5,23 @@ paco:
   username: paco01
   password_digest: <%= BCrypt::Password.create('testme', cost: 5) %>
   admin: true
+  phone: "5555550101"
 
 maria:
   email: maria@vendelo.com
   username: maria23
   password_digest: <%= BCrypt::Password.create('testme', cost: 5) %>
+  phone: "5555550102"
 
 pepe:
   email: pepe@vendelo.com
   username: pepito
   password_digest: <%= BCrypt::Password.create('testme', cost: 5) %>
+  phone: "5555550103"
+
+sinfono:
+  email: sinfono@vendelo.com
+  username: sinfono1
+  password_digest: <%= BCrypt::Password.create('testme', cost: 5) %>
+  # Sin telefono a proposito: representa una cuenta legada aun no
+  # completada por consola, para probar la guarda en ProductRequestsController.

@@ -17,8 +17,12 @@ es:
         email: "Correo"
         username: "Nombre de usuario"
         password: "Contraseña"
+        phone: "Teléfono"
       category:
         name: "Nombre"
+      product_request:
+        product: "Producto"
+        user: "Usuario"
   common:
     confirm: "Estas seguro?"
     back: "Volver"
@@ -67,6 +71,7 @@ es:
       edit: "Editar producto"
       delete: "Borrar producto"
       view_more_products: "Ver mas productos de %{username}"
+      request_product: "Solicitar informacion"
     create:
       created: "Tu producto se ha creado correctamente"
     update:
@@ -90,6 +95,21 @@ es:
       destroyed: "Tu categoria se ha eliminado correctamente"
     new:
       title: "Añadir categoria"
+  product_requests:
+    product_request:
+      attended: "Atendida"
+      not_attended: "No atendida"
+      mark_attended: "Marcar como atendida"
+      mark_unattended: "Marcar como no atendida"
+    index:
+      title: "Solicitudes"
+    create:
+      created: "Tu solicitud se ha enviado correctamente"
+      missing_phone: "Tu cuenta no tiene un telefono registrado. Contacta al administrador para completarlo antes de solicitar productos."
+    attend:
+      attended: "Solicitud marcada como atendida"
+    unattend:
+      unattended: "Solicitud marcada como no atendida"
   favorites:
     index:
       title: "Mis Favoritos"

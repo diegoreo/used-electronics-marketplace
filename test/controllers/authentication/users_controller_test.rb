@@ -12,7 +12,7 @@ class Authentication::UsersControllerTest < ActionDispatch::IntegrationTest
         status: "fail"
       }.to_json, headers: {})
     assert_difference("User.count") do
-      post users_url, params: { user: { email: "juan@vendelo.com", username: "juan09", password: "testme" } }
+      post users_url, params: { user: { email: "juan@vendelo.com", username: "juan09", password: "testme", phone: "5555550199" } }
     end
 
     assert_redirected_to products_url

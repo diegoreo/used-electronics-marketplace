@@ -21,6 +21,11 @@
   </div>
 
   <div>
+    <%= form.label :phone %>
+    <%= form.telephone_field :phone, required: true %>
+  </div>
+
+  <div>
     <%= form.submit %>
   </div>
 <% end %>

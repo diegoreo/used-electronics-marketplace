@@ -1,0 +1,8 @@
+maria_switch:
+  user: maria
+  product: switch
+
+pepe_ps2:
+  user: pepe
+  product: ps2
+  attended_at: 2026-01-01 10:00:00
