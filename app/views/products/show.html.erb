@@ -1,3 +1,12 @@
+<% content_for :title, @product.title %>
+<% content_for :head do %>
+  <meta property="og:type" content="product">
+  <meta property="og:title" content="<%= @product.title %>">
+  <meta property="og:description" content="<%= truncate(@product.description, length: 150) %>">
+  <meta property="og:image" content="<%= product_og_image_url(@product) %>">
+  <meta property="og:url" content="<%= product_url(@product) %>">
+<% end %>
+
 <%= render partial: "products/product_details", locals: { product: @product } %>
 <%= link_to t(".edit"), edit_product_path(@product) if Current.user&.admin? %>
 <%= link_to t(".delete"), product_path(@product), data:{

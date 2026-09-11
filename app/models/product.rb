@@ -23,6 +23,10 @@ class Product < ApplicationRecord
 
   has_many :product_requests, dependent: :destroy
 
+  def og_image
+    photo.variant(resize_to_fill: [1200, 630]) if photo.attached?
+  end
+
   def broadcast
     broadcast_replace_to self, partial: "products/product_details", locals: { product: self}
   end

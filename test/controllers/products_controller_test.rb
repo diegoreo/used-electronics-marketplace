@@ -57,6 +57,8 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
     assert_select ".title", "play station 2"
     assert_select ".description", "funciona correctamente, sin cable de video"
     assert_select ".price", "900$"
+    assert_select "meta[property='og:title'][content=?]", "play station 2"
+    assert_select "meta[property='og:url'][content=?]", product_url(products(:ps2))
   end
 
   test "render a new product form" do

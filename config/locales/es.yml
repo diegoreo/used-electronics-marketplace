@@ -72,6 +72,8 @@ es:
       delete: "Borrar producto"
       view_more_products: "Ver mas productos de %{username}"
       request_product: "Solicitar informacion"
+      share: "Compartir"
+      copied: "¡Copiado!"
     create:
       created: "Tu producto se ha creado correctamente"
     update:

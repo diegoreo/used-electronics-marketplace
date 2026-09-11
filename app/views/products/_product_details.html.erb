@@ -3,4 +3,11 @@
 <h1 class="title"><%= product.title %></h1>
 <p class="description"><%= product.description%></p>
 <span class="price"><%= product.price%>$ </span>
-</div>    
+<button type="button" data-controller="share"
+  data-share-url-value="<%= product_url(product) %>"
+  data-share-title-value="<%= product.title %>"
+  data-share-copied-label-value="<%= t("products.show.copied") %>"
+  data-action="click->share#share">
+  <span data-share-target="label"><%= t("products.show.share") %></span>
+</button>
+</div>
