@@ -1,6 +1,6 @@
 es:
   app_name: "Vendelo"
-  meta_title: "Compra y vende productos de segunda mano"
+  meta_title: "Compra y vende en Vendelo"
   activerecord:
     models:
       product: Producto
@@ -12,7 +12,7 @@ es:
         description: "Descripcion"
         price: "Precio"
         category_id: "Categorias"
-        photo: "Foto"
+        photos: "Fotos"
       user:
         email: "Correo"
         username: "Nombre de usuario"
@@ -57,9 +57,11 @@ es:
       description_placeholder: "Puedes describir el producto"
       price_placeholder: "¿Cuanto cuesta?"
       category_placeholder: "Elige la categoria"
+      current_photos: "Fotos actuales"
       submit: "Vendelo!"
     index:
       title: "Productos:"
+      featured_title: "Destacados"
       all: "Todos"
       min_price: "Precio minimo"
       max_price: "Precio maximo"
@@ -74,12 +76,18 @@ es:
       request_product: "Solicitar informacion"
       share: "Compartir"
       copied: "¡Copiado!"
+      feature_product: "Destacar producto"
+      unfeature_product: "Quitar de destacados"
     create:
       created: "Tu producto se ha creado correctamente"
     update:
       updated: "Tu producto se ha actualizado correctamente"
     destroy:
       destroyed: "Tu producto se ha eliminado correctamente"
+    feature:
+      featured: "Producto destacado"
+    unfeature:
+      unfeatured: "Producto ya no esta destacado"
   categories:
     category:
       edit: "Editar"
@@ -112,6 +120,9 @@ es:
       attended: "Solicitud marcada como atendida"
     unattend:
       unattended: "Solicitud marcada como no atendida"
+  product_photos:
+    destroy:
+      destroyed: "Foto eliminada"
   favorites:
     index:
       title: "Mis Favoritos"

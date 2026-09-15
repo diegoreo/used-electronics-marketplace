@@ -12,7 +12,7 @@ class Product < ApplicationRecord
     cheapest: "price ASC"
   }
 
-  has_one_attached :photo
+  has_many_attached :photos
   validates :title, presence: true
   validates :description, presence: true
   validates :price, presence: true
@@ -23,8 +23,28 @@ class Product < ApplicationRecord
 
   has_many :product_requests, dependent: :destroy
 
+  def cover_photo
+    photos.first
+  end
+
   def og_image
-    photo.variant(resize_to_fill: [1200, 630]) if photo.attached?
+    cover_photo&.variant(resize_to_fill: [1200, 630])
+  end
+
+  def featured?
+    featured_at.present?
+  end
+
+  def feature!
+    update(featured_at: Time.current)
+  end
+
+  def unfeature!
+    update(featured_at: nil)
+  end
+
+  def self.featured
+    where.not(featured_at: nil).order(featured_at: :desc)
   end
 
   def broadcast

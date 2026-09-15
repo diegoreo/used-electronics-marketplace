@@ -38,3 +38,4 @@
 
 # Dump de Redis (Sidekiq corre en local para FetchCountryJob/WelcomeEmailJob)
 *.rdb
+.claude/

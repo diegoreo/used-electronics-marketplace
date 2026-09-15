@@ -1,11 +1,10 @@
-<%= link_to t(".add"), new_product_path, class: "mx-2 text-teal-500 font-bold", data: { turbo_frame: "modal" } if Current.user&.admin? %>
-<%= link_to t(".favorites"), favorites_path, class: "mx-2 text-teal-500 font-bold" if Current.user %>
-<%= link_to t(".categories"), categories_path, class: "mx-2 text-teal-500 font-bold" if Current.user&.admin? %>
-<%= link_to t(".product_requests"), product_requests_path, class: "mx-2 text-teal-500 font-bold" if Current.user&.admin? %>
-<%= link_to t(".login"), new_session_path, class: "mx-2 text-teal-500 font-bold" unless Current.user %>
-<%= link_to t(".register"), new_user_path, class: "mx-2 text-teal-500 font-bold" unless Current.user %> 
+<%= link_to t(".add"), new_product_path, class: "mx-2 font-semibold text-white/90 hover:text-brand-gold transition-colors", data: { turbo_frame: "modal" } if Current.user&.admin? %>
+<%= link_to t(".favorites"), favorites_path, class: "mx-2 font-semibold text-white/90 hover:text-brand-gold transition-colors" if Current.user %>
+<%= link_to t(".categories"), categories_path, class: "mx-2 font-semibold text-white/90 hover:text-brand-gold transition-colors" if Current.user&.admin? %>
+<%= link_to t(".product_requests"), product_requests_path, class: "mx-2 font-semibold text-white/90 hover:text-brand-gold transition-colors" if Current.user&.admin? %>
+<%= link_to t(".login"), new_session_path, class: "mx-2 font-semibold text-white/90 hover:text-brand-gold transition-colors" unless Current.user %>
+<%= link_to t(".register"), new_user_path, class: "mx-2 font-semibold text-white/90 hover:text-brand-gold transition-colors" unless Current.user %>
 <%= link_to t(".logout"), session_path(Current.user.id), data: {
   turbo_method: :delete,
-  turbo_confirm: t("common.confirm")  
-}, class: "mx-2 text-teal-500 font-bold" if Current.user %> 
-  
+  turbo_confirm: t("common.confirm")
+}, class: "mx-2 font-semibold text-white/90 hover:text-brand-gold transition-colors" if Current.user %>

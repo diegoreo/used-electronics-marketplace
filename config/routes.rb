@@ -13,7 +13,13 @@ Rails.application.routes.draw do
   end
   resources :users, only: :show, path: "/user", param: :username
   resources :categories, except: :show
-  resources :products, path: "/"
+  resources :products, path: "/" do
+    member do
+      patch :feature
+      patch :unfeature
+    end
+    resources :photos, only: :destroy, controller: "product_photos"
+  end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
 

@@ -17,9 +17,28 @@
     <%= form.collection_select :category_id, Category.all.order(name: :asc), :id, :name, { prompt: t(".category_placeholder") }, {
         class: "bg-gray-100 rounded-2xl border-gray-200 mb-4 w-full text-gray-500"}  %>
 </div>
+<% if @product.persisted? && @product.photos.attached? %>
+  <div class="mb-4">
+    <p class="text-sm text-gray-500 mb-2"><%= t(".current_photos") %></p>
+    <div class="flex flex-wrap gap-2">
+      <% @product.photos.each do |photo| %>
+        <div class="relative">
+          <%= image_tag photo.variant(resize_to_fill: [120, 120]), class: "w-24 h-24 object-cover rounded-lg" %>
+          <%= link_to product_photo_path(@product, photo), data: { turbo_method: :delete, turbo_confirm: t("common.confirm") },
+              class: "absolute -top-2 -right-2 bg-white rounded-full shadow p-1 text-red-600" do %>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+            </svg>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+
 <div class= "bg-gray-100 rounded-2xl border-gray-200 mb-4 w-full border-[1px] p-2 text-gray-500">
-    <%= form.label :photo%>
-    <%= form.file_field :photo %>
+    <%= form.label :photos %>
+    <%= form.file_field :photos, multiple: true %>
 </div>
   <%= form.submit t(".submit"), class: "px-4 py-2 font-semibold text-sm bg-cyan-500 text-white rounded-2xl cursor-pointer shadow-sm"%>
 

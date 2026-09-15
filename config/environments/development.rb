@@ -55,6 +55,11 @@ Rails.application.configure do
   # Highlight code that enqueued background job in logs.
   config.active_job.verbose_enqueue_logs = true
 
+  # Los jobs sin adaptador propio (ej. los internos de Active Storage) no
+  # necesitan la persistencia de Solid Queue en desarrollo — Solid Queue
+  # sigue siendo el default de producción, sin cambios.
+  config.active_job.queue_adapter = :async
+
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true
 

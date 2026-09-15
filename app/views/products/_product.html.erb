@@ -1,8 +1,8 @@
-<%= link_to product_path(product.id), class: "product bg-white mb-2 rounded sm:w-[calc(33.33333%_-_.5rem)] lg:w-[calc(25%_-_.5rem)]", "data-turbo-frame": "_top" do %>
-  <%= image_tag product.photo.attached? ? product.photo : "imagen por defecto.webp", class: "w-full h-60 object-cover"  %>
-  <div class= "m-2">
-    <span class= "font-bold text-xl"> <%= product.price %>$</span>
-    <h2><%= product.title %> </h2>
-    <p class= "text-gray-500 text-sm mt-2"> <%= product.description %> </p>
+<%= link_to product_path(product.id), class: "product group block bg-brand-surface border border-brand-border rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow mb-4 sm:w-[calc(33.33333%_-_.5rem)] lg:w-[calc(25%_-_.5rem)]", "data-turbo-frame": "_top" do %>
+  <%= image_tag product.cover_photo || "imagen por defecto.webp", class: "w-full h-48 sm:h-56 object-cover" %>
+  <div class= "p-4">
+    <span class= "block font-display font-bold text-lg text-brand-gold"><%= product.price %>$</span>
+    <h2 class="font-semibold text-brand-text mt-1"><%= product.title %></h2>
+    <p class= "text-brand-text-secondary text-sm mt-1"> <%= product.description %> </p>
   </div>
  <% end %>

@@ -179,4 +179,78 @@ test "does not show the favorite heart to a guest" do
   assert_select "#favorite", count: 0
 end
 
+test "allows the admin to feature a product" do
+  patch feature_product_path(products(:ps2))
+  assert products(:ps2).reload.featured?
+  assert_redirected_to product_path(products(:ps2))
+end
+
+test "allows the admin to unfeature a product" do
+  products(:ps2).update!(featured_at: Time.current)
+  patch unfeature_product_path(products(:ps2))
+  refute products(:ps2).reload.featured?
+end
+
+test "does not allow a non-admin to feature a product" do
+  login(users(:maria))
+  patch feature_product_path(products(:ps2))
+  refute products(:ps2).reload.featured?
+  assert_redirected_to products_path
+end
+
+test "does not allow a non-admin to unfeature a product" do
+  login(users(:maria))
+  products(:ps2).update!(featured_at: Time.current)
+  patch unfeature_product_path(products(:ps2))
+  assert products(:ps2).reload.featured?
+  assert_redirected_to products_path
+end
+
+test "shows the featured section when there are featured products" do
+  products(:ps2).update!(featured_at: Time.current)
+  get products_path
+  assert_select "#featured-products"
+end
+
+test "hides the featured section when there are no featured products" do
+  get products_path
+  assert_select "#featured-products", count: 0
+end
+
+test "adding a new photo on update does not remove existing ones" do
+  product = products(:ps2)
+  product.photos.attach(io: File.open(Rails.root.join("test/fixtures/files/sample.gif")), filename: "one.gif", content_type: "image/gif")
+  product.photos.attach(io: File.open(Rails.root.join("test/fixtures/files/sample.gif")), filename: "two.gif", content_type: "image/gif")
+  assert_equal 2, product.photos.count
+
+  patch product_path(product), params: {
+    product: { photos: [fixture_file_upload("sample.gif", "image/gif")] }
+  }
+
+  assert_equal 3, product.reload.photos.count
+end
+
+test "allows the admin to delete an individual photo" do
+  product = products(:ps2)
+  product.photos.attach(io: File.open(Rails.root.join("test/fixtures/files/sample.gif")), filename: "one.gif", content_type: "image/gif")
+  photo = product.photos.first
+
+  assert_difference("product.photos.count", -1) do
+    delete product_photo_path(product, photo)
+  end
+  assert_redirected_to edit_product_path(product)
+end
+
+test "does not allow a non-admin to delete a photo" do
+  product = products(:ps2)
+  product.photos.attach(io: File.open(Rails.root.join("test/fixtures/files/sample.gif")), filename: "one.gif", content_type: "image/gif")
+  photo = product.photos.first
+  login(users(:maria))
+
+  assert_no_difference("product.photos.count") do
+    delete product_photo_path(product, photo)
+  end
+  assert_redirected_to products_path
+end
+
 end

@@ -1,1 +1,17 @@
 @import "tailwindcss";
+
+@theme {
+  --font-sans: "Public Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Sora", ui-sans-serif, system-ui, sans-serif;
+
+  --color-brand-navy: #14202E;
+  --color-brand-navy-hover: #0D161F;
+  --color-brand-gold: #C9962C;
+  --color-brand-gold-hover: #A97D22;
+  --color-brand-bg: #F7F7F5;
+  --color-brand-surface: #FFFFFF;
+  --color-brand-border: #E4E4E0;
+  --color-brand-text: #1A2430;
+  --color-brand-text-secondary: #5B6472;
+  --color-brand-text-muted: #8A94A3;
+}

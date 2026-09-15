@@ -1,18 +1,31 @@
-<div class="bg-white flex justify-between items-center px-2" data-controller="menu">
-  <%= link_to products_path do %>
-      <h1 class= "text-2xl font-bold text-teal-500"><%= t("app_name") %></h1>
-  <% end %>
-  <button class="sm:hidden" data-action="click->menu#toggle"> <%= image_tag "icons/menu.svg", width: 35, height: 35 %> </button>
-  
-  <div class="hidden sm:block">
-    <%= render partial: "shared/items" %>
+<header class="bg-brand-navy" data-controller="menu">
+  <div class="lg:container lg:mx-auto flex flex-wrap items-center gap-3 px-4 py-3">
+    <%= link_to products_path, class: "shrink-0" do %>
+      <h1 class="font-display text-2xl font-extrabold text-white"><%= t("app_name") %></h1>
+    <% end %>
+
+    <div class="order-3 w-full sm:order-none sm:flex-1 sm:flex sm:justify-center">
+      <%= form_with url: products_path, method: :get, class: "w-full sm:max-w-md" do |form| %>
+        <%= form.text_field :query_text, placeholder: t("products.index.query_text"), onchange: "this.form.requestSubmit()", value: params[:query_text],
+          class: "w-full rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm text-white placeholder:text-white/60 focus:outline-none focus:ring-2 focus:ring-brand-gold focus:border-brand-gold" %>
+      <% end %>
+    </div>
+
+    <button class="order-2 sm:order-none ml-auto sm:hidden" data-action="click->menu#toggle" aria-label="Menu">
+      <%= image_tag "icons/menu.svg", width: 28, height: 28, class: "invert" %>
+    </button>
+
+    <div class="hidden sm:block">
+      <%= render partial: "shared/items" %>
+    </div>
   </div>
 
-<!-- Menu mobile -->
-  <div class="gap-4 sm:hidden absolute bg-white top-0 right-0 shadow z-10 h-full flex flex-col min-w-[45%] overflow-y-scroll ease-in-out duration-200 p-5 translate-x-full" data-menu-target="items">
-    <button class="mb-4" data-action="click->menu#toggle"> <%= image_tag "icons/close.svg", width: 35, height: 35 %> </button>
+  <!-- Menu mobile -->
+  <div class="gap-4 sm:hidden fixed bg-brand-navy top-0 right-0 shadow-lg z-20 h-full flex flex-col min-w-[70%] overflow-y-scroll ease-in-out duration-200 p-6 translate-x-full" data-menu-target="items">
+    <button class="mb-4 self-end" data-action="click->menu#toggle" aria-label="Cerrar menu">
+      <%= image_tag "icons/close.svg", width: 24, height: 24, class: "invert" %>
+    </button>
 
-  <%= render partial: "shared/items" %>
-  </div> 
-
-</div>
+    <%= render partial: "shared/items" %>
+  </div>
+</header>

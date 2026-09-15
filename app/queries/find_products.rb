@@ -18,7 +18,7 @@ class FindProducts
   private
 
   def initial_scope
-    Product.with_attached_photo
+    Product.with_attached_photos
   end
   
   def filter_by_category_id(scoped, category_id)
@@ -59,7 +59,7 @@ class FindProducts
   
   def sort(scoped, order_by)
     order_by_query = Product::ORDER_BY.fetch(order_by&.to_sym, Product::ORDER_BY[:newest])
-    scoped.order(order_by_query)
+    scoped.order(order_by_query).order(id: :desc)
   end
 
 end

@@ -4,6 +4,7 @@ class ProductsController < ApplicationController
 
   def index
     @categories = Category.order(name: :asc).load_async
+    @featured_products = Product.featured.with_attached_photos
     @pagy, @products = pagy_countless(FindProducts.new.call(product_params_index).load_async, limit: 12)
   end
 
@@ -35,7 +36,8 @@ class ProductsController < ApplicationController
   def update
     authorize! product
     # @product = Product.find(params[:id])   se creo metodo product para no repetir codigo
-    if product.update(product_params)   #se le quito @ a @product.update porque ahora lo jala del metodo
+    if product.update(product_params.except(:photos))   #se le quito @ a @product.update porque ahora lo jala del metodo
+      product.photos.attach(product_params[:photos]) if product_params[:photos].present?
       # notify_all_users  se  remplazara por turbo product.broadcast
       product.broadcast
       redirect_to products_path, notice: t(".updated") #"Tu producto se ha actualizado correctamente" se agrego traduccion con t(".update") las traducciones estan en es.yml
@@ -51,10 +53,22 @@ class ProductsController < ApplicationController
     redirect_to products_path, notice: t(".destroyed"), status: :see_other #"Tu producto se ha eliminado correctamente" se agrego traduccion con t(".update") las traducciones estan en es.yml
   end
 
+  def feature
+    authorize! product
+    product.feature!
+    redirect_to product_path(product), notice: t(".featured")
+  end
+
+  def unfeature
+    authorize! product
+    product.unfeature!
+    redirect_to product_path(product), notice: t(".unfeatured")
+  end
+
   private
 
   def product_params
-    params.require(:product).permit(:title, :description, :price, :photo, :category_id)
+    params.require(:product).permit(:title, :description, :price, :category_id, photos: [])
   end
   def product_params_index
     params.permit(:category_id, :min_price, :max_price, :query_text, :order_by, :page, :favorites, :user_id )
