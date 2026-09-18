@@ -2,11 +2,18 @@
   <div class="lg:w-1/2">
     <% if product.photos.attached? %>
       <div data-controller="gallery">
-        <div class="relative rounded-2xl overflow-hidden bg-brand-surface border border-brand-border">
+        <div class="relative rounded-2xl overflow-hidden bg-brand-surface border border-brand-border"
+          data-action="keydown@window->gallery#closeOnEscape">
           <% product.photos.each_with_index do |photo, index| %>
-            <%= image_tag photo, data: { gallery_target: "slide" },
-                class: "w-full h-72 sm:h-96 lg:h-full object-cover #{"hidden" unless index.zero?}" %>
+            <%= image_tag photo, data: { gallery_target: "slide", action: "click->gallery#open" },
+                class: "w-full aspect-[4/3] object-cover cursor-zoom-in #{"hidden" unless index.zero?}" %>
           <% end %>
+
+          <div class="absolute bottom-3 right-3 rounded-full bg-black/50 p-2 text-white pointer-events-none">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+              <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607ZM10.5 7.5v6m3-3h-6" />
+            </svg>
+          </div>
 
           <% if product.photos.count > 1 %>
             <button type="button" data-action="gallery#previous" aria-label="Anterior"
@@ -34,6 +41,33 @@
             <% end %>
           </div>
         <% end %>
+
+        <div data-gallery-target="lightbox" data-action="click->gallery#closeOnBackdrop"
+          class="hidden fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4">
+          <button type="button" data-action="gallery#close" aria-label="Cerrar"
+            class="absolute top-4 right-4 rounded-full bg-white/10 p-3 text-white hover:bg-white/20 transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+            </svg>
+          </button>
+
+          <% if product.photos.count > 1 %>
+            <button type="button" data-action="gallery#previous" aria-label="Anterior"
+              class="absolute left-4 top-1/2 -translate-y-1/2 rounded-full bg-white/10 p-3 text-white hover:bg-white/20 transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+              </svg>
+            </button>
+            <button type="button" data-action="gallery#next" aria-label="Siguiente"
+              class="absolute right-4 top-1/2 -translate-y-1/2 rounded-full bg-white/10 p-3 text-white hover:bg-white/20 transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+              </svg>
+            </button>
+          <% end %>
+
+          <img data-gallery-target="lightboxImage" class="max-h-full max-w-full object-contain">
+        </div>
       </div>
     <% end %>
   </div>
