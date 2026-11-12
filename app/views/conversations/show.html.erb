@@ -1,0 +1,8 @@
+<div class="max-w-3xl mx-auto px-4 py-6">
+  <h1 class="font-display text-xl font-bold text-brand-text mb-1">
+    <%= link_to @conversation.product.title, product_path(@conversation.product), class: "hover:text-brand-gold transition-colors" %>
+  </h1>
+  <p class="text-sm text-brand-text-secondary mb-4"><%= @conversation.user.username %></p>
+
+  <%= render "conversations/messages_and_form", conversation: @conversation, form_url: conversation_messages_path(@conversation) %>
+</div>

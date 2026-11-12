@@ -11,6 +11,7 @@ class ProductsController < ApplicationController
   def show
     # @product = Product.find(params[:id]) #se creo un metodo product para no repetir codigo
     product #se llamo al metodo product
+    @conversation = Conversation.find_by(product: product, user: Current.user) if Current.user && !Current.user.admin?
   end
 
   def new

@@ -253,4 +253,40 @@ test "does not allow a non-admin to delete a photo" do
   assert_redirected_to products_path
 end
 
+test "a logged-in buyer sees the chat section on the product page" do
+  login(users(:maria))
+  get product_path(products(:ps2))
+  assert_select "h2", text: I18n.t("products.show.chat_title")
+end
+
+test "the admin does not see the chat section on the product page" do
+  get product_path(products(:ps2))
+  refute_includes response.body, I18n.t("products.show.chat_title")
+end
+
+test "a guest sees a prompt to log in instead of the chat section" do
+  delete session_path(users(:paco).id)
+  get product_path(products(:ps2))
+  assert_select "a", text: I18n.t("products.show.login_to_chat")
+end
+
+test "the header shows an unread badge for the admin when there is an unread conversation" do
+  conversation = Conversation.create!(product: products(:ps2), user: users(:maria))
+  conversation.add_message(user: users(:maria), content: "Hola")
+
+  get products_path
+
+  assert_select "a[href='#{conversations_path}'] span", text: "1"
+end
+
+test "the header shows no badge once the conversation has been read" do
+  conversation = Conversation.create!(product: products(:ps2), user: users(:maria))
+  conversation.add_message(user: users(:maria), content: "Hola")
+  conversation.mark_as_read!
+
+  get products_path
+
+  assert_select "a[href='#{conversations_path}'] span", count: 0
+end
+
 end

@@ -1,6 +1,12 @@
 require "test_helper"
 
 class ProductTest < ActiveSupport::TestCase
+  test "destroying a product also destroys its conversations" do
+    conversation = Conversation.create!(product: products(:ps2), user: users(:maria))
+    products(:ps2).destroy!
+    refute Conversation.exists?(conversation.id)
+  end
+
   test "featured? is false by default" do
     refute products(:ps2).featured?
   end

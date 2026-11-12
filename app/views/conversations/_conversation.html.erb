@@ -1,0 +1,16 @@
+<% unread = conversation.unread_by_admin? %>
+<%= link_to conversation_path(conversation),
+    class: "flex items-center justify-between gap-4 border-b border-brand-border py-3 #{"font-bold" if unread}" do %>
+  <div class="flex items-center gap-3">
+    <% if conversation.product.cover_photo %>
+      <%= image_tag conversation.product.cover_photo.variant(resize_to_fill: [48, 48]), class: "w-12 h-12 rounded-lg object-cover" %>
+    <% end %>
+    <div>
+      <p class="text-brand-text"><%= conversation.product.title %></p>
+      <p class="text-sm text-brand-text-secondary"><%= conversation.user.username %></p>
+    </div>
+  </div>
+  <% if unread %>
+    <span class="w-2 h-2 rounded-full bg-brand-gold"></span>
+  <% end %>
+<% end %>

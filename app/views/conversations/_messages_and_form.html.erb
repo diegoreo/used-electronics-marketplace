@@ -1,0 +1,13 @@
+<% if conversation %>
+  <div id="messages" data-controller="scroll-to-bottom" class="flex flex-col gap-3 max-h-96 overflow-y-auto p-4 rounded-2xl bg-brand-surface border border-brand-border mb-3">
+    <%= render partial: "messages/message", collection: conversation.messages.includes(:user).order(:created_at, :id), as: :message %>
+  </div>
+  <%= turbo_stream_from conversation %>
+<% end %>
+
+<%= form_with model: Message.new, url: form_url, method: :post, class: "flex gap-2" do |form| %>
+  <%= form.text_area :content, rows: 2, placeholder: t("messages.form.placeholder"),
+      class: "flex-1 rounded-xl border border-brand-border bg-brand-surface px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-gold focus:border-brand-gold" %>
+  <%= form.submit t("messages.form.submit"),
+      class: "rounded-full bg-brand-gold px-5 py-2 text-sm font-semibold text-white hover:bg-brand-gold-hover transition-colors" %>
+<% end %>

@@ -1,0 +1,7 @@
+<% admin_message = message.user.admin? %>
+<div id="<%= dom_id(message) %>" class="flex flex-col <%= admin_message ? "items-end" : "items-start" %>">
+  <div class="max-w-[75%] rounded-2xl px-4 py-2 text-sm <%= admin_message ? "bg-brand-gold text-white" : "bg-brand-surface border border-brand-border text-brand-text" %>">
+    <p class="whitespace-pre-wrap"><%= message.content %></p>
+  </div>
+  <span class="text-xs text-brand-text-secondary mt-1"><%= l(message.created_at, format: :short) %></span>
+</div>

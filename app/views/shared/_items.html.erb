@@ -2,6 +2,11 @@
 <%= link_to t(".favorites"), favorites_path, class: "mx-2 font-semibold text-white/90 hover:text-brand-gold transition-colors" if Current.user %>
 <%= link_to t(".categories"), categories_path, class: "mx-2 font-semibold text-white/90 hover:text-brand-gold transition-colors" if Current.user&.admin? %>
 <%= link_to t(".product_requests"), product_requests_path, class: "mx-2 font-semibold text-white/90 hover:text-brand-gold transition-colors" if Current.user&.admin? %>
+<% if Current.user&.admin? %>
+  <%= link_to conversations_path, class: "mx-2 font-semibold text-white/90 hover:text-brand-gold transition-colors" do %>
+    <%= t(".conversations") %><% if (unread = Conversation.unread_by_admin_count) > 0 %><span class="ml-1 inline-flex items-center justify-center rounded-full bg-brand-gold text-white text-xs w-5 h-5"><%= unread %></span><% end %>
+  <% end %>
+<% end %>
 <%= link_to t(".login"), new_session_path, class: "mx-2 font-semibold text-white/90 hover:text-brand-gold transition-colors" unless Current.user %>
 <%= link_to t(".register"), new_user_path, class: "mx-2 font-semibold text-white/90 hover:text-brand-gold transition-colors" unless Current.user %>
 <%= link_to t(".logout"), session_path(Current.user.id), data: {

@@ -23,6 +23,8 @@ es:
       product_request:
         product: "Producto"
         user: "Usuario"
+      message:
+        content: "Mensaje"
   common:
     confirm: "Estas seguro?"
     back: "Volver"
@@ -37,6 +39,8 @@ es:
       register: "Registrate"
       logout: "Cerrar sesion"
       favorites: "Mis favoritos"
+      product_requests: "Solicitudes"
+      conversations: "Mensajes"
   authentication:
     users:
       create:
@@ -78,6 +82,8 @@ es:
       copied: "¡Copiado!"
       feature_product: "Destacar producto"
       unfeature_product: "Quitar de destacados"
+      chat_title: "Escríbele al vendedor"
+      login_to_chat: "Inicia sesión para escribirle al vendedor"
     create:
       created: "Tu producto se ha creado correctamente"
     update:
@@ -123,6 +129,13 @@ es:
   product_photos:
     destroy:
       destroyed: "Foto eliminada"
+  conversations:
+    index:
+      title: "Mensajes"
+  messages:
+    form:
+      placeholder: "Escribe un mensaje..."
+      submit: "Enviar"
   favorites:
     index:
       title: "Mis Favoritos"

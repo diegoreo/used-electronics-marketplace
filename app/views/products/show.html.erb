@@ -60,4 +60,15 @@
   </div>
 </div>
 
+<% if Current.user && !Current.user.admin? %>
+  <div class="max-w-5xl mx-auto px-4 pb-10">
+    <h2 class="font-display text-lg font-bold text-brand-text mb-2"><%= t(".chat_title") %></h2>
+    <%= render "conversations/messages_and_form", conversation: @conversation, form_url: product_messages_path(@product) %>
+  </div>
+<% elsif Current.user.nil? %>
+  <div class="max-w-5xl mx-auto px-4 pb-10">
+    <p class="text-sm text-brand-text-secondary"><%= link_to t(".login_to_chat"), new_session_path, class: "text-brand-gold hover:underline" %></p>
+  </div>
+<% end %>
+
 <%= turbo_stream_from @product %>

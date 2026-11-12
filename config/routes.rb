@@ -13,12 +13,16 @@ Rails.application.routes.draw do
   end
   resources :users, only: :show, path: "/user", param: :username
   resources :categories, except: :show
+  resources :conversations, only: [:index, :show] do
+    resources :messages, only: :create, controller: "conversation_messages"
+  end
   resources :products, path: "/" do
     member do
       patch :feature
       patch :unfeature
     end
     resources :photos, only: :destroy, controller: "product_photos"
+    resources :messages, only: :create, controller: "product_messages"
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

@@ -22,6 +22,7 @@ class Product < ApplicationRecord
   belongs_to :user, default: -> { Current.user }
 
   has_many :product_requests, dependent: :destroy
+  has_many :conversations, dependent: :destroy
 
   def cover_photo
     photos.first

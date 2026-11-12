@@ -24,6 +24,8 @@ class User < ApplicationRecord
   has_many :products, dependent: :destroy
   has_many :favorites, dependent: :destroy
   has_many :product_requests, dependent: :destroy
+  has_many :conversations, dependent: :destroy
+  has_many :messages, dependent: :destroy
 
 
   before_save :downcase_attributes
