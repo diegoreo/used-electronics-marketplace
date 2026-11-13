@@ -41,6 +41,7 @@ es:
       favorites: "Mis favoritos"
       product_requests: "Solicitudes"
       conversations: "Mensajes"
+      my_conversations: "Mis mensajes"
   authentication:
     users:
       create:
@@ -132,6 +133,10 @@ es:
   conversations:
     index:
       title: "Mensajes"
+  my_conversations:
+    index:
+      title: "Mis mensajes"
+      empty: "Todavia no tienes conversaciones. Escribile al vendedor desde la pagina de un producto."
   messages:
     form:
       placeholder: "Escribe un mensaje..."

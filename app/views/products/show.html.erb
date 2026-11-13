@@ -61,7 +61,9 @@
 </div>
 
 <% if Current.user && !Current.user.admin? %>
-  <div class="max-w-5xl mx-auto px-4 pb-10">
+  <div data-controller="scroll-to-chat mark-as-read"
+       data-action="turbo:load@window->scroll-to-chat#scroll turbo:before-stream-render@document->mark-as-read#markRead"
+       data-mark-as-read-url-value="<%= read_product_messages_path(@product) %>" class="max-w-5xl mx-auto px-4 pb-10">
     <h2 class="font-display text-lg font-bold text-brand-text mb-2"><%= t(".chat_title") %></h2>
     <%= render "conversations/messages_and_form", conversation: @conversation, form_url: product_messages_path(@product) %>
   </div>

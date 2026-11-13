@@ -1,6 +1,9 @@
 require "test_helper"
+require "turbo/broadcastable/test_helper"
 
 class ConversationMessagesControllerTest < ActionDispatch::IntegrationTest
+  include Turbo::Broadcastable::TestHelper
+
   setup do
     @conversation = Conversation.create!(product: products(:ps2), user: users(:maria))
     @conversation.add_message(user: users(:maria), content: "Hola, sigue disponible?")
@@ -31,5 +34,15 @@ class ConversationMessagesControllerTest < ActionDispatch::IntegrationTest
       post conversation_messages_path(@conversation), params: { message: { content: "Hola" } }
     end
     assert_redirected_to products_path
+  end
+
+  test "replying notifies the buyer's own badge stream" do
+    login(users(:paco))
+
+    turbo_streams = capture_turbo_stream_broadcasts([ :buyer_inbox, users(:maria) ]) do
+      post conversation_messages_path(@conversation), params: { message: { content: "Si, disponible" } }
+    end
+
+    assert_equal 1, turbo_streams.size
   end
 end

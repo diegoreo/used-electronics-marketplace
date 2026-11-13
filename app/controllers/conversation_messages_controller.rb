@@ -6,6 +6,7 @@ class ConversationMessagesController < ApplicationController
 
     if message.persisted?
       message.broadcast_to_conversation
+      message.notify_recipient
       redirect_to conversation_path(conversation)
     else
       redirect_to conversation_path(conversation), alert: message.errors.full_messages.to_sentence

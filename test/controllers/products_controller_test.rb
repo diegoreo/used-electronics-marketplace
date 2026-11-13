@@ -289,4 +289,36 @@ test "the header shows no badge once the conversation has been read" do
   assert_select "a[href='#{conversations_path}'] span", count: 0
 end
 
+test "the product chat section wires up the mark-as-read controller with the right URL" do
+  login(users(:maria))
+  get product_path(products(:ps2))
+
+  assert_select "[data-controller='scroll-to-chat mark-as-read']"
+  assert_includes response.body, read_product_messages_path(products(:ps2))
+end
+
+test "the header subscribes the admin only to the admin_inbox stream" do
+  login(users(:paco))
+  get products_path
+
+  assert_includes response.body, Turbo::StreamsChannel.signed_stream_name(:admin_inbox)
+  refute_includes response.body, Turbo::StreamsChannel.signed_stream_name([ :buyer_inbox, users(:paco) ])
+end
+
+test "the header subscribes a buyer only to their own buyer_inbox stream, never another buyer's" do
+  login(users(:maria))
+  get products_path
+
+  refute_includes response.body, Turbo::StreamsChannel.signed_stream_name(:admin_inbox)
+  assert_includes response.body, Turbo::StreamsChannel.signed_stream_name([ :buyer_inbox, users(:maria) ])
+  refute_includes response.body, Turbo::StreamsChannel.signed_stream_name([ :buyer_inbox, users(:pepe) ])
+end
+
+test "a guest is not subscribed to any inbox stream" do
+  delete session_path(users(:paco).id)
+  get products_path
+
+  refute_includes response.body, "turbo-cable-stream-source"
+end
+
 end

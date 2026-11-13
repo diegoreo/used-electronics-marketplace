@@ -6,4 +6,12 @@ class Message < ApplicationRecord
   def broadcast_to_conversation
     broadcast_append_to conversation, target: "messages", partial: "messages/message", locals: { message: self }
   end
+
+  def notify_recipient
+    if user_id == conversation.user_id
+      Conversation.broadcast_admin_badge
+    else
+      Conversation.broadcast_buyer_badge(conversation.user)
+    end
+  end
 end

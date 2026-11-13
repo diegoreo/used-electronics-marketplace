@@ -24,9 +24,17 @@ class Authentication::SessionsControllerTest < ActionDispatch::IntegrationTest
   
   test "should logout" do
     login
-    delete session_url(@user.id) 
+    delete session_url(@user.id)
     assert_redirected_to products_url
     assert_equal flash[:notice], "Tu sesion ha terminado! Hasta la proxima"
+  end
+
+  test "logging out actually clears the session, not just redirecting" do
+    login
+    delete session_url(@user.id)
+
+    get my_conversations_url
+    assert_redirected_to new_session_path
   end
 
 end

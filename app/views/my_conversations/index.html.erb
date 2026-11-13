@@ -1,0 +1,9 @@
+<h1 class="font-display text-xl font-bold text-brand-text px-4 pt-6"><%= t(".title") %></h1>
+
+<div class="max-w-3xl mx-auto px-4">
+  <% if @conversations.any? %>
+    <%= render partial: "my_conversation", collection: @conversations %>
+  <% else %>
+    <p class="text-sm text-brand-text-secondary py-6"><%= t(".empty") %></p>
+  <% end %>
+</div>

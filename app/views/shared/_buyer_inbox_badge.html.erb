@@ -1,0 +1,3 @@
+<%= link_to my_conversations_path, class: "buyer-inbox-badge-link mx-2 font-semibold text-white/90 hover:text-brand-gold transition-colors" do %>
+  <%= t("shared.items.my_conversations") %><% if count > 0 %><span class="ml-1 inline-flex items-center justify-center rounded-full bg-brand-gold text-white text-xs w-5 h-5"><%= count %></span><% end %>
+<% end %>

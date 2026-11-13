@@ -1,0 +1,13 @@
+<% unread = my_conversation.unread_by_buyer? %>
+<%= link_to product_path(my_conversation.product, scroll_to_chat: true),
+    class: "flex items-center justify-between gap-4 border-b border-brand-border py-3 #{"font-bold" if unread}" do %>
+  <div class="flex items-center gap-3">
+    <% if my_conversation.product.cover_photo %>
+      <%= image_tag my_conversation.product.cover_photo.variant(resize_to_fill: [48, 48]), class: "w-12 h-12 rounded-lg object-cover" %>
+    <% end %>
+    <p class="text-brand-text"><%= my_conversation.product.title %></p>
+  </div>
+  <% if unread %>
+    <span class="w-2 h-2 rounded-full bg-brand-gold"></span>
+  <% end %>
+<% end %>

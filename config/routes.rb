@@ -15,14 +15,18 @@ Rails.application.routes.draw do
   resources :categories, except: :show
   resources :conversations, only: [:index, :show] do
     resources :messages, only: :create, controller: "conversation_messages"
+    member { patch :read }
   end
+  resources :my_conversations, only: :index
   resources :products, path: "/" do
     member do
       patch :feature
       patch :unfeature
     end
     resources :photos, only: :destroy, controller: "product_photos"
-    resources :messages, only: :create, controller: "product_messages"
+    resources :messages, only: :create, controller: "product_messages" do
+      collection { patch :read }
+    end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

@@ -14,14 +14,43 @@ class ConversationsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "allows the admin to open a conversation and marks it as read" do
+  test "allows the admin to open a conversation" do
+    login(users(:paco))
+    get conversation_path(@conversation)
+    assert_response :success
+  end
+
+  test "viewing the conversation (GET) does not mark it as read by itself" do
+    login(users(:paco))
+    get conversation_path(@conversation)
+    assert @conversation.reload.unread_by_admin?
+  end
+
+  test "the conversation page wires up the mark-as-read controller with the right URL" do
+    login(users(:paco))
+    get conversation_path(@conversation)
+
+    assert_select "[data-controller='mark-as-read']"
+    assert_includes response.body, read_conversation_path(@conversation)
+  end
+
+  test "PATCH read marks the conversation as read" do
     login(users(:paco))
     assert @conversation.unread_by_admin?
 
-    get conversation_path(@conversation)
+    patch read_conversation_path(@conversation)
 
-    assert_response :success
+    assert_response :no_content
     refute @conversation.reload.unread_by_admin?
+  end
+
+  test "does not allow a non-admin to mark a conversation as read" do
+    login(users(:maria))
+
+    patch read_conversation_path(@conversation)
+
+    assert_redirected_to products_path
+    assert @conversation.reload.unread_by_admin?
   end
 
   test "does not allow a non-admin to view the inbox" do
