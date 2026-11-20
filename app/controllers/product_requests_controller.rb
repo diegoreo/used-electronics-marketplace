@@ -2,7 +2,8 @@ class ProductRequestsController < ApplicationController
   before_action :authorize!, only: [:index, :attend, :unattend]
 
   def index
-    @product_requests = ProductRequest.includes(:user, :product).order(created_at: :desc)
+    @filter = filter_param
+    @product_requests = ProductRequest.for_filter(@filter)
   end
 
   def create
@@ -16,15 +17,35 @@ class ProductRequestsController < ApplicationController
 
   def attend
     product_request.attend!
-    redirect_to product_requests_path, notice: t(".attended")
+    respond_with_updated_list(t(".attended"))
   end
 
   def unattend
     product_request.unattend!
-    redirect_to product_requests_path, notice: t(".unattended")
+    respond_with_updated_list(t(".unattended"))
   end
 
   private
+
+  def filter_param
+    ProductRequest::FILTERS.include?(params[:filter]) ? params[:filter] : "all"
+  end
+
+  def respond_with_updated_list(notice)
+    filter = filter_param
+
+    respond_to do |format|
+      format.html { redirect_to product_requests_path(filter: filter == "all" ? nil : filter), notice: notice }
+      format.turbo_stream do
+        flash.now[:notice] = notice
+        render turbo_stream: [
+          turbo_stream.replace("product_requests_list", partial: "list", locals: { product_requests: ProductRequest.for_filter(filter), filter: filter }),
+          turbo_stream.replace_all(".product-requests-badge", partial: "shared/product_requests_badge"),
+          turbo_stream.replace("flash", partial: "shared/flash")
+        ]
+      end
+    end
+  end
 
   def product
     @product ||= Product.find(params[:product_id])

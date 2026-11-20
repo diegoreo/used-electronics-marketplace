@@ -1,0 +1,2 @@
+<% count = ProductRequest.pending_count %>
+<span class="product-requests-badge ml-1 <%= count.zero? ? "hidden" : "inline-flex" %> items-center justify-center rounded-full bg-brand-gold text-white text-xs w-5 h-5"><%= count %></span>

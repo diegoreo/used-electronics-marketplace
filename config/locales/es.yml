@@ -44,9 +44,17 @@ es:
       my_conversations: "Mis mensajes"
   authentication:
     users:
+      new:
+        submit: "Crear cuenta"
+        has_account: "¿Ya tienes cuenta?"
       create:
         created: "Tu cuenta se ha creado!"
     sessions:
+      new:
+        login_label: "Correo o usuario"
+        password_label: "Contraseña"
+        submit: "Entrar"
+        no_account: "¿No tienes cuenta?"
       create:
         created: "Bienvenido!"
         failed: "Login invalido!"
@@ -120,6 +128,14 @@ es:
       mark_unattended: "Marcar como no atendida"
     index:
       title: "Solicitudes"
+      filters:
+        all: "Todas"
+        pending: "Pendientes"
+        attended: "Atendidas"
+    list:
+      empty_all: "No hay solicitudes todavia"
+      empty_pending: "No hay solicitudes pendientes. Al dia!"
+      empty_attended: "Todavia no atendiste ninguna solicitud"
     create:
       created: "Tu solicitud se ha enviado correctamente"
       missing_phone: "Tu cuenta no tiene un telefono registrado. Contacta al administrador para completarlo antes de solicitar productos."

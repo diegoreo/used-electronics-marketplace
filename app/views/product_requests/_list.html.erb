@@ -1,0 +1,7 @@
+<div id="product_requests_list" class="flex flex-col gap-3">
+  <% if product_requests.any? %>
+    <%= render partial: "product_request", collection: product_requests, locals: { filter: filter } %>
+  <% else %>
+    <p class="text-sm text-brand-text-secondary py-6"><%= t(".empty_#{filter}") %></p>
+  <% end %>
+</div>

@@ -1,3 +1,14 @@
-<h1> <%= t(".title") %> </h1>
+<div class="max-w-4xl mx-auto px-4 py-6">
+  <h1 class="font-display text-xl font-bold text-brand-text mb-4"><%= t(".title") %></h1>
 
-<%= render partial: "product_request", collection: @product_requests %>
+  <div class="flex gap-2 mb-4">
+    <% { "all" => t(".filters.all"), "pending" => t(".filters.pending"), "attended" => t(".filters.attended") }.each do |value, label| %>
+      <% active = @filter == value %>
+      <%= link_to label, product_requests_path(filter: value),
+          class: "whitespace-nowrap px-4 py-2 rounded-full text-sm font-semibold border transition-colors #{active ? "border-brand-gold text-brand-gold bg-brand-gold/10" : "border-brand-border text-brand-text-secondary bg-brand-surface hover:border-brand-gold hover:text-brand-gold"}",
+          "aria-current": (active ? "page" : nil) %>
+    <% end %>
+  </div>
+
+  <%= render "list", product_requests: @product_requests, filter: @filter %>
+</div>

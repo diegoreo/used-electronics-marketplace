@@ -1,18 +1,27 @@
-<%= form_with(url: sessions_path) do |form| %>
+<div class="max-w-md mx-auto px-4 py-12">
+  <div class="bg-brand-surface border border-brand-border rounded-2xl shadow-sm p-6 sm:p-8">
+    <h1 class="font-display text-xl font-bold text-brand-text mb-6 text-center"><%= t("shared.items.login") %></h1>
 
+    <%= form_with(url: sessions_path) do |form| %>
+      <div class="mb-4">
+        <%= form.label :login, t(".login_label"), class: "block text-sm font-medium text-brand-text-secondary mb-1" %>
+        <%= form.text_field :login, required: true,
+            class: "w-full rounded-xl border border-brand-border bg-brand-surface px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-gold focus:border-brand-gold" %>
+      </div>
 
-  <div>
-    <%= form.label :login %>
-    <%= form.text_field :login, required: true %>
+      <div class="mb-6">
+        <%= form.label :password, t(".password_label"), class: "block text-sm font-medium text-brand-text-secondary mb-1" %>
+        <%= form.password_field :password, required: true,
+            class: "w-full rounded-xl border border-brand-border bg-brand-surface px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-gold focus:border-brand-gold" %>
+      </div>
+
+      <%= form.submit t(".submit"),
+          class: "w-full rounded-full bg-brand-gold px-5 py-2.5 text-sm font-semibold text-white hover:bg-brand-gold-hover transition-colors cursor-pointer" %>
+    <% end %>
+
+    <p class="text-sm text-brand-text-secondary text-center mt-6">
+      <%= t(".no_account") %>
+      <%= link_to t("shared.items.register"), new_user_path, class: "text-brand-gold hover:text-brand-gold-hover font-semibold" %>
+    </p>
   </div>
-
-
-  <div>
-    <%= form.label :password %>
-    <%= form.password_field :password, required: true %>
-  </div>
-
-  <div>
-    <%= form.submit %>
-  </div>
-<% end %>
+</div>

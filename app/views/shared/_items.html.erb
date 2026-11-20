@@ -1,7 +1,11 @@
 <%= link_to t(".add"), new_product_path, class: "mx-2 font-semibold text-white/90 hover:text-brand-gold transition-colors", data: { turbo_frame: "modal" } if Current.user&.admin? %>
 <%= link_to t(".favorites"), favorites_path, class: "mx-2 font-semibold text-white/90 hover:text-brand-gold transition-colors" if Current.user %>
 <%= link_to t(".categories"), categories_path, class: "mx-2 font-semibold text-white/90 hover:text-brand-gold transition-colors" if Current.user&.admin? %>
-<%= link_to t(".product_requests"), product_requests_path, class: "mx-2 font-semibold text-white/90 hover:text-brand-gold transition-colors" if Current.user&.admin? %>
+<% if Current.user&.admin? %>
+  <%= link_to product_requests_path, class: "mx-2 font-semibold text-white/90 hover:text-brand-gold transition-colors" do %>
+    <%= t(".product_requests") %><%= render "shared/product_requests_badge" %>
+  <% end %>
+<% end %>
 <%= render "shared/admin_inbox_badge", count: Conversation.unread_by_admin_count if Current.user&.admin? %>
 <%= render "shared/buyer_inbox_badge", count: Conversation.unread_by_buyer_count(Current.user) if Current.user && !Current.user.admin? %>
 <%= link_to t(".login"), new_session_path, class: "mx-2 font-semibold text-white/90 hover:text-brand-gold transition-colors" unless Current.user %>
